@@ -94,6 +94,11 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get('/guest',(req,res)=>{
+  const name = "Guest";
+
+  res.status(200).json({name:name});
+})
 app.use("/api", isAuthenticated, bot_Router);
 
 app.listen(PORT, () => {
