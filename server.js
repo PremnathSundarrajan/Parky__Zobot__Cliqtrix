@@ -117,7 +117,8 @@ app.get('/guest',(req,res)=>{
 
   res.status(200).json({name:name});
 })
-app.use("/api", isAuthenticated, bot_Router);
+app.use(isAuthenticated);
+app.use("/api", bot_Router);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
