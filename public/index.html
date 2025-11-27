@@ -16,12 +16,16 @@
 
 
 <script>
-    $zoho.salesiq.ready = function() {
-        var visitorId = $zoho.salesiq.visitor.uniqueuserid();
-        console.log("SalesIQ Visitor ID: " + visitorId);
-        // You can then use this visitorId in other parts of your HTML/JS
-    };
+    if (typeof $zoho !== 'undefined' && $zoho.salesiq) {
+        $zoho.salesiq.ready = function() {
+            var visitorId = $zoho.salesiq.visitor.uniqueuserid();
+            console.log("SalesIQ Visitor ID: " + visitorId);
+        };
+    } else {
+        console.error("Zoho SalesIQ script is not loaded correctly or is blocked.");
+    }
 </script>
+
 <script>
     // **1. Function to Get the Visitor ID from SalesIQ**
     function getZohoVisitorId() {
