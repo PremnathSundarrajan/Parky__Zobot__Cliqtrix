@@ -50,7 +50,7 @@
                     actualUserEmail = email; 
 
                     // 2. **Set SalesIQ Visitor Info (CRITICAL STEP)**
-                    $zoho.salesiq.visitor.setVisitorInfo({
+                    $zoho.salesiq.visitor.info({
                         // Set the Zobot's lookup key to your database ID
                         name: actualUserId, 
                         email: actualUserEmail
