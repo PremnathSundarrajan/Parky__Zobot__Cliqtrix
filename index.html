@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+<button id="get">Login</button>
+<div id="response"></div>
+
+<script>
+document.getElementById('get').addEventListener('click', () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    fetch('https://parky-zobot-cliqtrix.onrender.com/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })  // sending email & password
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Display the response from backend
+        document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+    })
+    .catch(err => {
+        console.error(err);
+        document.getElementById('response').innerText = 'Error: ' + err.message;
+    });
+});
+</script>
+
+    <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
+</body>
+</html>

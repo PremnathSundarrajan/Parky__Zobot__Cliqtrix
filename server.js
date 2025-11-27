@@ -13,6 +13,7 @@ const prisma = new PrismaClient();
 
 
 app.use(express.json());
+app.use(express.static('public'));
 app.use(sessionMiddleware); 
 console.log(process.env.DATABASE_URL);
 app.post("/signup", async (req, res) => {
