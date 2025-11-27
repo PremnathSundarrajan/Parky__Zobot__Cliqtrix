@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+app.set("trust proxy", 1);
+
 const bcrypt = require("bcrypt");
 const { isAuthenticated } = require("./middleware/auth");
 const sessionMiddleware = require("./config/sessionStore");
@@ -8,12 +10,11 @@ const PORT = 3000;
 const bot_Router = require("./router/bot_Router");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-app.set("trust proxy", 1);
 
 
 app.use(express.json());
 app.use(sessionMiddleware); 
-
+console.log(process.env.DATABASE_URL);
 app.post("/signup", async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
