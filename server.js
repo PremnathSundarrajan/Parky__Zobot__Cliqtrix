@@ -64,6 +64,7 @@ app.post('/login',async(req,res)=>{
   const {email, password, zoho_visitor_id} = req.body;
 
    console.log(email);
+   console.log(zoho_visitor_id);
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required" });
     }

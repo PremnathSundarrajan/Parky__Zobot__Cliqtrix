@@ -10,7 +10,7 @@
     <input type="email" id="email" required placeholder="Email">
     <input type="password" id="password" required placeholder="Password">
     <button type="submit" id ="but">Login</button>
-
+    <div id="res"></div>
 <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
 <script>
     // **1. Function to Get the Visitor ID from SalesIQ**
@@ -30,6 +30,8 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const visitorId = await getZohoVisitorId();
+        console.log(visitorId);
+        document.getElementById('res').textContent = visitorId;
 
         if (!visitorId) {
             alert("Could not retrieve Zoho SalesIQ Visitor ID. Ensure the widget is loaded.");
