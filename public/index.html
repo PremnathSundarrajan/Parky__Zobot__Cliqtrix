@@ -29,21 +29,29 @@
  
 
  <script>
+    const userId = "USER_123456"; // Your internal, unique DB ID for the user
+const userEmail = "jane.doe@example.com";
         var $zoho = $zoho || {};
         $zoho.salesiq = $zoho.salesiq || {};
         
-$zoho.salesiq.ready=function()
 
-{
-
-
-   $zoho.salesiq.visitor.id("67465746");
-}
 
             // Set up the ready callback
             $zoho.salesiq.ready= function() {
                 // Now, $zoho is guaranteed to be defined and salesiq methods are ready.
                 console.log("Zoho SalesIQ is fully loaded and ready!");
+                $zoho.salesiq.visitor.setVisitorInfo({
+    // The unique ID you want to associate with this visitor (CRITICAL)
+    name: userId, 
+    // Other optional parameters to identify the user
+    email: userEmail,
+    phone: "1234567890",
+    tags: ["Logged_In", "Premium"]
+});
+
+console.log(`Zoho SalesIQ User ID set to: ${userId}`);
+const setVisitorID = $zoho.salesiq.visitor.uniqueuserid();
+console.log(setVisitorID);
                 // Function to Get the Visitor ID from SalesIQ (now safe to call)
                function getZohoVisitorId() {
     try {
