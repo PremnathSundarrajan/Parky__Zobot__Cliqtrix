@@ -45,13 +45,14 @@
         // We still use a small delay just to ensure the widget has finished processing.
         setTimeout(function() {
             // A: Retrieve the ID that was manually SET (should be TEST_USER_ID)
-            const setVisitorID = $zoho.salesiq.visitor.uniqueuserid();
+          
             
             // B: Retrieve the standard SalesIQ-generated ID
             const autoVisitorID = $zoho.salesiq.visitor.id(); 
+            const visitor = $zoho.salesiq.visitor.info();
 
             console.log("-----------------------------------------");
-            console.log(`[VERIFICATION CHECK] Zobot Lookup ID (uniqueuserid): ${setVisitorID}`);
+              console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.info()): ${visitor}`);
             console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.id()): ${autoVisitorID}`);
             console.log("-----------------------------------------");
         }, 1000); // Increased to 500ms for robust testing
