@@ -53,10 +53,10 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const body = req.body;
 
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email:body.email }
     });
 
     if (!user) {
