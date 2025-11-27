@@ -2,8 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 app.set("trust proxy", 1);
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
-const bcrypt = require("bcrypt");
+
 const { isAuthenticated } = require("./middleware/auth");
 const sessionMiddleware = require("./config/sessionStore");
 const PORT = 3000;
@@ -88,16 +90,19 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    req.session.user = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone
-    };
+     const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.SESSION_SECRET, { expiresIn: "1h" });
+    // req.session.user = {
+    //   id: user.id,
+    //   name: user.name,
+    //   email: user.email,
+    //   phone: user.phone
+    // };
 
     return res.status(200).json({
       message: "Logged in successfully",
-      session: req.session.user
+      token, 
+      email:user.email,
+      name:user.name
     });
 
   } catch (error) {
