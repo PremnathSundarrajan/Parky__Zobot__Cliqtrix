@@ -50,8 +50,8 @@
         });
 
         const data = await response.json();
-        if (data.accessToken) {
-            localStorage.setItem('accessToken', data.accessToken);
+        if (data.botToken) {
+            localStorage.setItem('botToken', data.botToken);
             alert('Login successful! Bot key saved to DB.');
             // Note: We don't store the botKey in local storage.
         } else {
