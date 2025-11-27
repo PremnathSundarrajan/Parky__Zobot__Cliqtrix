@@ -21,7 +21,7 @@
   "homepage": "https://github.com/PremnathSundarrajan/Parky__Zobot__Cliqtrix#readme",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^6.19.0",
+    "@prisma/client": "6.19.0",
     "bcrypt": "^6.0.0",
     "connect-pg-simple": "^10.0.0",
     "dotenv": "^17.2.3",
@@ -29,6 +29,6 @@
     "express-session": "^1.18.2",
     "nodemon": "^3.1.11",
     "pg": "^8.16.3",
-    "prisma": "^6.19.0"
+    "prisma": "6.19.0"
   }
 }
