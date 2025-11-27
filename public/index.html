@@ -48,15 +48,27 @@ $zoho.salesiq.ready=function()
                function getZohoVisitorId() {
     try {
         // **FIXED API CALL:** Use the visitor.id() method, which directly returns the Visitor ID string.
-        const visitorId = $zoho.salesiq.visitor.id(); 
-        
-        // Fallback: If id() fails, try the getVisitorInfo() method
-        if (!visitorId) {
-            const visitorInfo = $zoho.salesiq.visitor.info.getVisitorInfo();
-            return visitorInfo.id;
+        let visitorId = null;
+
+        // **ATTEMPT 1 (Most direct method):**
+        if ($zoho.salesiq.visitor.id) {
+            visitorId = $zoho.salesiq.visitor.id();
+            if (visitorId) return visitorId;
         }
 
-        return visitorId; 
+        // **ATTEMPT 2 (Standard structure, maybe the name was just missing .info):**
+        if ($zoho.salesiq.visitor.getVisitor) {
+             const info = $zoho.salesiq.visitor.getVisitor();
+             if (info && info.id) return info.id;
+        }
+        
+        // **ATTEMPT 3 (Another common path):**
+        if ($zoho.salesiq.visitor.info && $zoho.salesiq.visitor.info.getVisitor) {
+             const info = $zoho.salesiq.visitor.info.getVisitor();
+             if (info && info.id) return info.id;
+        }
+
+        return null;  
     } catch (e) {
         // Logging the actual error
         console.error("Error with SalesIQ Visitor ID API:", e);
