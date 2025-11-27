@@ -36,16 +36,24 @@
                 // Now, $zoho is guaranteed to be defined and salesiq methods are ready.
                 console.log("Zoho SalesIQ is fully loaded and ready!");
                 // Function to Get the Visitor ID from SalesIQ (now safe to call)
-                function getZohoVisitorId() {
-                    try {
-                        // Using the standard visitor info ID as it's the most reliable 
-                        const visitorInfo = $zoho.salesiq.visitor.info.getVisitor().id;
-                        return visitorInfo; 
-                    } catch (e) {
-                        console.error("Error retrieving SalesIQ Visitor ID inside ready:", e);
-                        return null;
-                    }
-                }
+               function getZohoVisitorId() {
+    try {
+        // **FIXED API CALL:** Use the visitor.id() method, which directly returns the Visitor ID string.
+        const visitorId = $zoho.salesiq.visitor.id(); 
+        
+        // Fallback: If id() fails, try the getVisitorInfo() method
+        if (!visitorId) {
+            const visitorInfo = $zoho.salesiq.visitor.info.getVisitorInfo();
+            return visitorInfo.id;
+        }
+
+        return visitorId; 
+    } catch (e) {
+        // Logging the actual error
+        console.error("Error with SalesIQ Visitor ID API:", e);
+        return null;
+    }
+}
 
                 // Event Listener for the Login Button
                 document.getElementById('but').addEventListener('click', async () => {
