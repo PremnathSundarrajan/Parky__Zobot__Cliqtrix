@@ -19,8 +19,8 @@
 </head> 
 <body>
 
-    <input type="email" id="email" required placeholder="Email">
-    <input type="password" id="password" required placeholder="Password">
+    <input type="email" id="email"  placeholder="Email">
+    <input type="password" id="password"  placeholder="Password">
     <button type="submit" id ="but">Login</button>
     <div id="res"></div>
     <div id="response"></div> 
@@ -30,11 +30,11 @@
 
  <script>
         var $zoho = $zoho || {};
-        $zoho.salesiq = $zoho.salesiq || {
+        $zoho.salesiq = $zoho.salesiq || {};
             // Set up the ready callback
-            ready: function() {
+            $zoho.salesiq.ready= function() {
                 // Now, $zoho is guaranteed to be defined and salesiq methods are ready.
-                
+                console.log("Zoho SalesIQ is fully loaded and ready!");
                 // Function to Get the Visitor ID from SalesIQ (now safe to call)
                 function getZohoVisitorId() {
                     try {
@@ -89,7 +89,7 @@
                     }
                 });
             }
-        };
+    
     </script>
 //<script>
     // **1. Function to Get the Visitor ID from SalesIQ**
