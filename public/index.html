@@ -38,13 +38,13 @@
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         //const visitorId = await getZohoVisitorId();
-        console.log(visitorId);
-        document.getElementById('res').textContent = visitorId;
+        // console.log(visitorId);
+        // document.getElementById('res').textContent = visitorId;
 
-        if (!visitorId) {
-            alert("Could not retrieve Zoho SalesIQ Visitor ID. Ensure the widget is loaded.");
-            return;
-        }
+        // if (!visitorId) {
+        //     alert("Could not retrieve Zoho SalesIQ Visitor ID. Ensure the widget is loaded.");
+        //     return;
+        // }
 
         const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/login', {
             method: 'POST',
