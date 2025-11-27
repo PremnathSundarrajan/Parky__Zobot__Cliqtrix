@@ -39,8 +39,8 @@
                 function getZohoVisitorId() {
                     try {
                         // Using the standard visitor info ID as it's the most reliable 
-                        const visitorInfo = $zoho.salesiq.visitor.info.getVisitor();
-                        return visitorInfo.id; 
+                        const visitorInfo = $zoho.salesiq.visitor.info.getVisitor().id;
+                        return visitorInfo; 
                     } catch (e) {
                         console.error("Error retrieving SalesIQ Visitor ID inside ready:", e);
                         return null;
