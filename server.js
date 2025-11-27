@@ -10,7 +10,7 @@ const PORT = 3000;
 const bot_Router = require("./router/bot_Router");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-
+const path = require('path');
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -63,7 +63,7 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body; // ✔ FIXED
-
+    console.log(email);
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required" });
     }
