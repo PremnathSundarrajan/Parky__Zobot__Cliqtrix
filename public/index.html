@@ -17,14 +17,24 @@
 <script>
     // **1. Function to Get the Visitor ID from SalesIQ**
     function getZohoVisitorId() {
-        // Check if the SalesIQ window object is available
-        if (typeof $zoho !== 'undefined' && $zoho.salesiq) {
-            // Use the getVisitor() method to retrieve visitor details
-            const visitorInfo = $zoho.salesiq.visitor.info.getVisitor();
-            // The unique ID is typically under 'id'
-            return visitorInfo.id; 
-        }
-        return null;
+        return new Promise((resolve) => {
+            if (typeof $zoho === 'undefined' || !$zoho.salesiq) {
+                console.warn("Zoho SalesIQ not loaded yet.");
+                resolve(null);
+                return;
+            }
+
+            $zoho.salesiq.visitor.onReady(() => {
+                try {
+                    const visitor = $zoho.salesiq.visitor.get();
+                    console.log("Visitor Info: ", visitor);
+                    resolve(visitor.id);
+                } catch (err) {
+                    console.error("Error getting visitor info:", err);
+                    resolve(null);
+                }
+            });
+        });
     }
 
     // **2. Function to Handle Login and Send Data**
