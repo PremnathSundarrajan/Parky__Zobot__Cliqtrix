@@ -37,7 +37,7 @@
     document.getElementById('but').addEventListener('click',async()=> {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        const visitorId = await getZohoVisitorId();
+        //const visitorId = await getZohoVisitorId();
         console.log(visitorId);
         document.getElementById('res').textContent = visitorId;
 
@@ -55,7 +55,7 @@
                 email: email,
                 password: password,
                 // **THIS IS THE CRITICAL LINE:**
-                zoho_visitor_id: visitorId 
+                //zoho_visitor_id: visitorId 
             })
         });
 
