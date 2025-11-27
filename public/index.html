@@ -18,65 +18,82 @@
  
 <script>
     // Define initial variables (will be populated with actual login data)
-    let actualUserId = ""; 
-    let actualUserEmail = "";
-
     var $zoho = $zoho || {};
     $zoho.salesiq = $zoho.salesiq || {};
 
     $zoho.salesiq.ready = function() {
-        console.log("Zoho SalesIQ is fully loaded and ready!");
-        
-        // Listener should ONLY handle the login process
-        document.getElementById('but').addEventListener('click', async () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+    $zoho.salesiq.visitor.info({
+    name: "USER_TEST_123456", 
+    email: "test@example.com"
+});
 
-            // 1. **Perform Login Request**
-            try {
-                const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, password: password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.botToken) {
-                    // --- SUCCESSFUL LOGIN ---
-                    
-                    // Assume your server returns the user's unique ID and email on success:
-                    actualUserId = data.userId || 'UNKNOWN'; 
-                    actualUserEmail = email; 
-
-                    // 2. **Set SalesIQ Visitor Info (CRITICAL STEP)**
-                    $zoho.salesiq.visitor.info({
-                        // Set the Zobot's lookup key to your database ID
-                        name: actualUserId, 
-                        email: actualUserEmail
-                    });
-
-                    // 3. **Retrieve the Set ID for Verification/Storage**
-                    // This is the persistent ID the Zobot needs to look up the token!
-                    const setVisitorID = $zoho.salesiq.visitor.uniqueuserid(); 
-                    
-                    console.log(`Zobot Lookup ID (uniqueuserid) set to: ${setVisitorID}`);
-                    document.getElementById('res').textContent = `Login Successful! Your Zobot ID is: ${setVisitorID}`;
-
-                    // 4. **Send the Zobot Lookup ID to the server for storage/update (OPTIONAL)**
-                    // Note: Your existing server code expects zoho_visitor_id in /login, 
-                    // but you should now send 'setVisitorID' or assume your server 
-                    // uses the 'actualUserId' to identify the botToken.
-
-                } else {
-                    alert('Login failed: ' + data.message);
-                }
-            } catch (error) {
-                console.error("Fetch error:", error);
-                alert("Network or Server error during login.");
-            }
-        });
+// 2. Add a slight delay (100ms) before attempting to retrieve it
+setTimeout(function() {
+    const setVisitorID = $zoho.salesiq.visitor.uniqueuserid();
+    console.log(`[VERIFICATION CHECK] uniqueuserid after delay: ${setVisitorID}`);
+    // If this returns the ID, your original flow had a timing problem.
+    
+}, 100);
     }
+    // let actualUserId = ""; 
+    // let actualUserEmail = "";
+
+    // var $zoho = $zoho || {};
+    // $zoho.salesiq = $zoho.salesiq || {};
+
+    // $zoho.salesiq.ready = function() {
+    //     console.log("Zoho SalesIQ is fully loaded and ready!");
+        
+    //     // Listener should ONLY handle the login process
+    //     document.getElementById('but').addEventListener('click', async () => {
+    //         const email = document.getElementById('email').value;
+    //         const password = document.getElementById('password').value;
+
+    //         // 1. **Perform Login Request**
+    //         try {
+    //             const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/login', {
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 body: JSON.stringify({ email: email, password: password })
+    //             });
+
+    //             const data = await response.json();
+
+    //             if (response.ok && data.botToken) {
+    //                 // --- SUCCESSFUL LOGIN ---
+                    
+    //                 // Assume your server returns the user's unique ID and email on success:
+    //                 actualUserId = data.userId || 'UNKNOWN'; 
+    //                 actualUserEmail = email; 
+
+    //                 // 2. **Set SalesIQ Visitor Info (CRITICAL STEP)**
+    //                 $zoho.salesiq.visitor.info({
+    //                     // Set the Zobot's lookup key to your database ID
+    //                     name: actualUserId, 
+    //                     email: actualUserEmail
+    //                 });
+
+    //                 // 3. **Retrieve the Set ID for Verification/Storage**
+    //                 // This is the persistent ID the Zobot needs to look up the token!
+    //                 const setVisitorID = $zoho.salesiq.visitor.uniqueuserid(); 
+                    
+    //                 console.log(`Zobot Lookup ID (uniqueuserid) set to: ${setVisitorID}`);
+    //                 document.getElementById('res').textContent = `Login Successful! Your Zobot ID is: ${setVisitorID}`;
+
+    //                 // 4. **Send the Zobot Lookup ID to the server for storage/update (OPTIONAL)**
+    //                 // Note: Your existing server code expects zoho_visitor_id in /login, 
+    //                 // but you should now send 'setVisitorID' or assume your server 
+    //                 // uses the 'actualUserId' to identify the botToken.
+
+    //             } else {
+    //                 alert('Login failed: ' + data.message);
+    //             }
+    //         } catch (error) {
+    //             console.error("Fetch error:", error);
+    //             alert("Network or Server error during login.");
+    //         }
+    //     });
+    // }
 </script>
 //<script>
     // **1. Function to Get the Visitor ID from SalesIQ**
