@@ -10,7 +10,7 @@
 <input type="text" id="password" placeholder="Password">
 <button id="get">Login</button>
 <div id="response"></div>
-<script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
+<script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
 <script>
     document.getElementById('get').addEventListener('click', () => {
     const email = document.getElementById('email').value;
@@ -27,10 +27,12 @@
         localStorage.setItem("token", token);
 
         // set SalesIQ visitor attribute after login
-        $zoho.salesiq.visitor.ready(function() {
+               if (window.$zoho && $zoho.salesiq && $zoho.salesiq.visitor) {
             $zoho.salesiq.visitor.setAttribute("jwtToken", token);
             console.log("Token sent to bot:", token);
-        });
+        } else {
+            console.error("SalesIQ visitor object not loaded yet");
+        }
 
         document.getElementById('response').innerText = JSON.stringify(data, null, 2);
     })
