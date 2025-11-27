@@ -8,6 +8,9 @@ const PORT = 3000;
 const bot_Router = require("./router/bot_Router");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+app.set("trust proxy", 1);
+
+
 app.use(express.json());
 app.use(sessionMiddleware); 
 
