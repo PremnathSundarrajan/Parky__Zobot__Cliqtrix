@@ -17,7 +17,7 @@ app.use(sessionMiddleware);
 app.post("/signup", async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
-
+    console.log(name);
     const existing = await prisma.user.findUnique({
       where: { email }
     });
