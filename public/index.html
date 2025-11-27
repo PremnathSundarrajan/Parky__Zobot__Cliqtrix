@@ -14,29 +14,7 @@
     <title>Document</title>
      <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
 
-    <script>
-    var $zoho = $zoho || {};
-    $zoho.salesiq = $zoho.salesiq || {
-        widgetcode: "siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685",
-        loadImmediately: true
-    };
-    var d = document;
-    var s = d.createElement("script");
-    s.type = "text/javascript";
-    s.id = "zsiqscript";
-    s.defer = true;
-    s.src = "salesiq.zohopublic.in";
-    var t = d.getElementsByTagName("script")[0]; // Corrected line to get the first script
-    t.parentNode.insertBefore(s, t);
-</script>
-
-<!-- Place your custom logic AFTER the snippet above -->
-<script>
-    // This will run reliably once SalesIQ is ready
-    $zoho.salesiq.ready = function() {
-        var visitorId = $zoho.salesiq.visitor.uniqueuserid();
-        console.log("SUCCESS: SalesIQ Visitor ID is: " + visitorId);
-    };
+    
 </script>
 </head> 
 <body>
@@ -53,21 +31,25 @@
 
 <script>
     // **1. Function to Get the Visitor ID from SalesIQ**
-    function getZohoVisitorId() {
-    return new Promise((resolve) => {
-        // Wait for Zoho SalesIQ to be ready
-        $zoho.salesiq.ready(function() {
-            try {
-                let visitor = $zoho.salesiq.visitor.get();
-                console.log("Visitor Info:", visitor);
-                resolve(visitor.id);
-            } catch (error) {
-                console.error("Error retrieving visitor ID:", error);
-                resolve(null);
-            }
-        });
-    });
-}
+    // function getZohoVisitorId() {
+    // return new Promise((resolve) => {
+    //     // Wait for Zoho SalesIQ to be ready
+    //     $zoho.salesiq.ready(function() {
+    //         try {
+    //             let visitor = $zoho.salesiq.visitor.get();
+    //             console.log("Visitor Info:", visitor);
+    //             resolve(visitor.id);
+    //         } catch (error) {
+    //             console.error("Error retrieving visitor ID:", error);
+    //             resolve(null);
+    //         }
+    //     });
+    // });
+// }
+     $zoho.salesiq.ready = function() {
+            $zoho.salesiq.visitor.id("67465746");
+    
+        }
 
 
     // **2. Function to Handle Login and Send Data**
