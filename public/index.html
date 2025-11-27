@@ -15,6 +15,13 @@
 
 <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
 <script>
+    $zoho.salesiq.ready = function() {
+        var visitorId = $zoho.salesiq.visitor.uniqueuserid();
+        console.log("SalesIQ Visitor ID: " + visitorId);
+        // You can then use this visitorId in other parts of your HTML/JS
+    };
+</script>
+<script>
     // **1. Function to Get the Visitor ID from SalesIQ**
     function getZohoVisitorId() {
     return new Promise((resolve) => {
