@@ -6,11 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-   <form onsubmit="event.preventDefault(); handleLogin();">
+
     <input type="email" id="email" required placeholder="Email">
     <input type="password" id="password" required placeholder="Password">
-    <button type="submit">Login</button>
-</form>
+    <button type="submit" id ="but">Login</button>
+
 <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
 <script>
     // **1. Function to Get the Visitor ID from SalesIQ**
@@ -26,10 +26,10 @@
     }
 
     // **2. Function to Handle Login and Send Data**
-    async function handleLogin() {
+    document.getElementById('but').addEventListener('click',async()=> {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        const visitorId = getZohoVisitorId();
+        const visitorId = await getZohoVisitorId();
 
         if (!visitorId) {
             alert("Could not retrieve Zoho SalesIQ Visitor ID. Ensure the widget is loaded.");
@@ -57,7 +57,7 @@
         } else {
             alert('Login failed: ' + data.message);
         }
-    }
+    })
 </script>
 
     
