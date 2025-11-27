@@ -12,23 +12,26 @@
 <div id="response"></div>
 <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
 <script>
-document.getElementById('get').addEventListener('click', () => {
+    document.getElementById('get').addEventListener('click', () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     fetch('https://parky-zobot-cliqtrix.onrender.com/login', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })  // sending email & password
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
     })
     .then(res => res.json())
     .then(data => {
+        const token = data.token;
+        localStorage.setItem("token", token);
 
+        // set SalesIQ visitor attribute after login
+        $zoho.salesiq.visitor.ready(function() {
+            $zoho.salesiq.visitor.setAttribute("jwtToken", token);
+            console.log("Token sent to bot:", token);
+        });
 
-        userToken = data.token;
-        localStorage.setItem("token",data.token);
         document.getElementById('response').innerText = JSON.stringify(data, null, 2);
     })
     .catch(err => {
@@ -36,15 +39,7 @@ document.getElementById('get').addEventListener('click', () => {
         document.getElementById('response').innerText = 'Error: ' + err.message;
     });
 });
-</script>
-<script>
-$zoho.salesiq.visitor.ready(function() {
-    // get token from localStorage (user already logged in)
-    var token = localStorage.getItem("token");
 
-    // store token as a visitor attribute in SalesIQ
-    $zoho.salesiq.visitor.setAttribute("jwtToken", token);
-});
 </script>
 
     
