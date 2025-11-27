@@ -18,23 +18,47 @@
  
 <script>
     // Define initial variables (will be populated with actual login data)
+   
     var $zoho = $zoho || {};
     $zoho.salesiq = $zoho.salesiq || {};
 
-    $zoho.salesiq.ready = function() {
-    $zoho.salesiq.visitor.info({
-    name: "USER_TEST_123456", 
-    email: "test@example.com"
-});
+    // *** Hardcoded test data for verification ***
+    const TEST_USER_ID = "USER_TEST_123456"; 
+    const TEST_EMAIL = "test@example.com";
 
-// 2. Add a slight delay (100ms) before attempting to retrieve it
-setTimeout(function() {
-    const setVisitorID = $zoho.salesiq.visitor.uniqueuserid();
-    console.log(`[VERIFICATION CHECK] uniqueuserid after delay: ${setVisitorID}`);
-    // If this returns the ID, your original flow had a timing problem.
-    
-}, 2000);
-    }
+    $zoho.salesiq.ready = function() {
+        console.log("Zoho SalesIQ is fully loaded and ready!");
+        
+        // --- 1. SET THE UNIQUE ID (The Zobot Lookup Key) ---
+        // This is the dedicated API for setting the UUID.
+        $zoho.salesiq.visitor.id(TEST_USER_ID); 
+        
+        // --- 2. SET OTHER USER INFO (Name/Email) ---
+        // This is separate and handles the display name for the operator.
+        $zoho.salesiq.visitor.info({
+            email: TEST_EMAIL,
+            name: "Test User",
+            // You can optionally add other details here
+        });
+
+        // 3. CHECK RETRIEVAL after a delay
+        // We still use a small delay just to ensure the widget has finished processing.
+        setTimeout(function() {
+            // A: Retrieve the ID that was manually SET (should be TEST_USER_ID)
+            const setVisitorID = $zoho.salesiq.visitor.uniqueuserid();
+            
+            // B: Retrieve the standard SalesIQ-generated ID
+            const autoVisitorID = $zoho.salesiq.visitor.id(); 
+
+            console.log("-----------------------------------------");
+            console.log(`[VERIFICATION CHECK] Zobot Lookup ID (uniqueuserid): ${setVisitorID}`);
+            console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.id()): ${autoVisitorID}`);
+            console.log("-----------------------------------------");
+        }, 1000); // Increased to 500ms for robust testing
+
+        // **(Your login button click handler goes here, using the principles above)**
+    };
+
     // let actualUserId = ""; 
     // let actualUserEmail = "";
 
