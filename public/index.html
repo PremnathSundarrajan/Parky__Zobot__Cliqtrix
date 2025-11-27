@@ -17,25 +17,21 @@
 <script>
     // **1. Function to Get the Visitor ID from SalesIQ**
     function getZohoVisitorId() {
-        return new Promise((resolve) => {
-            if (typeof $zoho === 'undefined' || !$zoho.salesiq) {
-                console.warn("Zoho SalesIQ not loaded yet.");
+    return new Promise((resolve) => {
+        // Wait for Zoho SalesIQ to be ready
+        $zoho.salesiq.ready(function() {
+            try {
+                let visitor = $zoho.salesiq.visitor.get();
+                console.log("Visitor Info:", visitor);
+                resolve(visitor.id);
+            } catch (error) {
+                console.error("Error retrieving visitor ID:", error);
                 resolve(null);
-                return;
             }
-
-            $zoho.salesiq.visitor.onReady(() => {
-                try {
-                    const visitor = $zoho.salesiq.visitor.get();
-                    console.log("Visitor Info: ", visitor);
-                    resolve(visitor.id);
-                } catch (err) {
-                    console.error("Error getting visitor info:", err);
-                    resolve(null);
-                }
-            });
         });
-    }
+    });
+}
+
 
     // **2. Function to Handle Login and Send Data**
     document.getElementById('but').addEventListener('click',async()=> {
