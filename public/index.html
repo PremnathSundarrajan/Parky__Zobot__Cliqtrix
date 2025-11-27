@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
-</head>
+</head> 
 <body>
 
     <input type="email" id="email" required placeholder="Email">
@@ -15,16 +14,21 @@
     <div id="response"></div> 
 
 
-<script>
-    if (typeof $zoho !== 'undefined' && $zoho.salesiq) {
-        $zoho.salesiq.ready = function() {
-            var visitorId = $zoho.salesiq.visitor.uniqueuserid();
-            console.log("SalesIQ Visitor ID: " + visitorId);
-        };
-    } else {
-        console.error("Zoho SalesIQ script is not loaded correctly or is blocked.");
-    }
+ <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" ></script>
+ <script>
+    // This ensures your logic runs only when the page and scripts are fully loaded
+    window.onload = function() {
+       if (typeof $zoho !== 'undefined' && $zoho.salesiq) {
+            $zoho.salesiq.ready = function() {
+                var visitorId = $zoho.salesiq.visitor.uniqueuserid();
+                console.log("SalesIQ Visitor ID: " + visitorId);
+            };
+       } else {
+           console.error("Zoho SalesIQ script is still not loaded.");
+       }
+    };
 </script>
+
 
 <script>
     // **1. Function to Get the Visitor ID from SalesIQ**
