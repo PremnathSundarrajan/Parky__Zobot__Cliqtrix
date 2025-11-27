@@ -95,7 +95,7 @@ app.post('/login',async(req,res)=>{
           zoho_visitor_id:zoho_visitor_id
         }
     })
-    res.json({botToken:botToken,message:"Error in login"});
+    res.json({botToken:botToken,message:" login successful"});
 
 
 })
@@ -107,7 +107,7 @@ app.get("/token",async(req,res)=>{
     }
 
     const user = await prisma.user.findUnique({where:{zoho_visitor_id:visitor_id}});
-    if (!user || !user.bot_auth_key) {
+    if (!user || !user.botToken) {
         return res.status(404).json({ message: 'Bot key not found or user not linked.' });
     }
 
