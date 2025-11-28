@@ -34,15 +34,15 @@ const bot_explore =  (req, res) => {
 // };
 
 const bot_book =  (req, res) => {
-  const body = req.body;
-  console.log(body);
-  if (body.area && body.area == "Tambaram") {
-    res.status(200).send("Booked Tambaram slot successfully");
-  } else if (body.area && body.area == "Chrompet") {
-    res.status(200).send("Booked Chrompet slot Successfully");
-  } else {
+  // const body = req.body;
+  // console.log(body);
+  // if (body.area && body.area == "Tambaram") {
+  //   res.status(200).send("Booked Tambaram slot successfully");
+  // } else if (body.area && body.area == "Chrompet") {
+  //   res.status(200).send("Booked Chrompet slot Successfully");
+  // } else {
     res.status(404).send("Please mention area");
-  }
+  // }
 }
 
 

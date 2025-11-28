@@ -13,6 +13,6 @@ bot_Router.get("/explore", bot_explore);
 
 // bot_Router.post("/explore/area", bot_explore_area);
 
-bot_Router.post("/explore/area/book", bot_book);
+bot_Router.get("/explore/area/book", bot_book);
 
 module.exports = bot_Router;
