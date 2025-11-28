@@ -46,4 +46,4 @@ const bot_book =  (req, res) => {
 }
 
 
-module.exports = {bot_greet,bot_explore, bot_explore_area, bot_book};
+module.exports = {bot_greet,bot_explore, bot_book};

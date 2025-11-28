@@ -3,7 +3,7 @@ const bot_Router = express.Router();
 const {
   bot_greet,
   bot_explore,
-  bot_explore_area,
+  // bot_explore_area,
   bot_book,
 } = require("../controller/bot_Controller");
 
