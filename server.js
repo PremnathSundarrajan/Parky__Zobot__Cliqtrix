@@ -200,10 +200,11 @@ app.get("/api/explore/area",async(req,res)=>{
   },
   select: { city: true }
     })
-     const cityList = area.map((u) => u.city);
-    const total_area = cityList.length;
+     const areaList = area.map((u) => u.name);
+     const uniquearea = [...new Set(areaList)];
+    const total_area = uniquearea.length;
 
-    res.status(200).send(`${place} has ${total_area} parking areas`);
+    res.status(200).json({reply:`${place} has ${total_area} parking areas`,area:uniquearea});
 
 });
 
