@@ -2,7 +2,9 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // optional for form data
+app.use(express.urlencoded({ extended: true }));
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient(); // optional for form data
 
 const bot_greet =  (req, res) => {
     const user = req.user;
