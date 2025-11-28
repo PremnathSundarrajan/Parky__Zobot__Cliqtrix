@@ -16,12 +16,24 @@ const bot_greet =  (req, res) => {
     );
 }
 
-const bot_explore =  (req, res) => {
+const bot_explore =  async(req, res) => {
+    const users = await prisma.parkingArea.findMany({
+  select: { city: true }
+});
+
+// Convert objects → array of only email strings
+const cityList = users.map(u => u.city);
+
+// Remove duplicates using Set
+const uniquecity = [...new Set(cityList)];
+
+console.log(uniquecity);
   res
     .status(200)
-    .send(
-      "Great choice! 🌆 Here are the available parking locations you can explore. Each place includes details like total slots, nearby landmarks, and availability to help you choose the perfect spot. Just select a location to see more information or book a slot instantly!"
-    );
+    .json({
+      reply:"Great choice! 🌆 Here are the available parking locations you can explore. Each place includes details like total slots, nearby landmarks, and availability to help you choose the perfect spot. Just select a location to see more information or book a slot instantly!",
+      city:uniquecity
+});
   //parking area cities will be suggested here
 };
 
