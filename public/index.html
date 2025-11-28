@@ -18,7 +18,8 @@
  
 <script>
     // Define initial variables (will be populated with actual login data)
-   
+    let autoVisitorID = "";
+    let visitor={};
     var $zoho = $zoho || {};
     $zoho.salesiq = $zoho.salesiq || {};
 
@@ -28,14 +29,15 @@
 
     $zoho.salesiq.ready = function() {
         console.log("Zoho SalesIQ is fully loaded and ready!");
-        
+          // Increased to 500ms for robust testing
+
         // --- 1. SET THE UNIQUE ID (The Zobot Lookup Key) ---
         // This is the dedicated API for setting the UUID.
-        $zoho.salesiq.visitor.id(TEST_USER_ID); 
-        
-        // --- 2. SET OTHER USER INFO (Name/Email) ---
-        // This is separate and handles the display name for the operator.
-        $zoho.salesiq.visitor.info({
+        document.getElementById('but').addEventListener('click',async()=>{
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            $zoho.salesiq.visitor.id(TEST_USER_ID); 
+          $zoho.salesiq.visitor.info({
             email: TEST_EMAIL,
             name: "Test User",
             // You can optionally add other details here
@@ -48,15 +50,37 @@
           
             
             // B: Retrieve the standard SalesIQ-generated ID
-            const autoVisitorID = $zoho.salesiq.visitor.id(); 
-            const visitor = $zoho.salesiq.visitor.info();
+             autoVisitorID = $zoho.salesiq.visitor.id(); 
+             visitor = $zoho.salesiq.visitor.info();
 
             console.log("-----------------------------------------");
               console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.info()): ${visitor.email}`);
             console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.id()): ${autoVisitorID}`);
             console.log("-----------------------------------------");
-        }, 1000); // Increased to 500ms for robust testing
+        }, 1000);
 
+            try{
+                const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/login',{
+                    method:'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({email:email, password:password,zoho_visitor_id:autoVisitorID})
+
+                })
+                 const data = await response.json();
+                 if (response.ok && data.botToken){
+                    alert(data.message);
+                 }else{
+                    alert('login failed');
+                 }
+            }catch(error) {
+               console.error("Fetch error:", error);
+               alert("Network or Server error during login.");
+         }        })
+       
+        
+        // --- 2. SET OTHER USER INFO (Name/Email) ---
+        // This is separate and handles the display name for the operator.
+       
         // **(Your login button click handler goes here, using the principles above)**
     };
 
