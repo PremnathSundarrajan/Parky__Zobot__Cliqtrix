@@ -104,6 +104,7 @@ app.post('/login',async(req,res)=>{
 
 app.post("/token",async(req,res)=>{
   const body= req.body;
+  console.log("/token API called");
   console.log(body.visitor_id);
   if (!body.visitor_id) {
         return res.status(400).json({ message: 'Visitor ID is required' });
