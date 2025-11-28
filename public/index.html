@@ -48,12 +48,12 @@
         document.getElementById('but').addEventListener('click',async()=>{
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-        //     $zoho.salesiq.visitor.id(TEST_USER_ID); 
-        //   $zoho.salesiq.visitor.info({
-        //     email: TEST_EMAIL,
-        //     name: "Test User",
-        //     // You can optionally add other details here
-        // });
+            $zoho.salesiq.visitor.id(TEST_USER_ID); 
+          $zoho.salesiq.visitor.info({
+            email: TEST_EMAIL,
+            name: "Test User",
+            // You can optionally add other details here
+        });
 
         // 3. CHECK RETRIEVAL after a delay
         // We still use a small delay just to ensure the widget has finished processing.
