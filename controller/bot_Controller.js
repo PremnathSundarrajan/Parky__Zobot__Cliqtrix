@@ -5,12 +5,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // optional for form data
 
 const bot_greet =  (req, res) => {
-  
+    const user = req.user;
+    console.log(user.name);
+
   
   res
     .status(200)
     .send(
-      `Hi  there! 👋 Welcome to UrbPark . I’m here to help you book a parking slot quickly and easily. How can I assist you today?`
+      `Hi ${user.name}! 👋 Welcome to UrbPark . I’m here to help you book a parking slot quickly and easily. How can I assist you today?`
     );
 }
 
