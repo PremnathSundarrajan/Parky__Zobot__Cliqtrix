@@ -7,7 +7,7 @@ const {
   bot_book,
 } = require("../controller/bot_Controller");
 
-bot_Router.get("/bot", bot_greet);
+bot_Router.post("/bot", bot_greet);
 
 bot_Router.get("/explore", bot_explore);
 
