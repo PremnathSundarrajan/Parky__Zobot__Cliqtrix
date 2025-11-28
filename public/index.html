@@ -78,14 +78,18 @@
                 })
                  const data = await response.json();
                  if (response.ok && data.botToken){
-                    alert(data.message);
-                     $zoho.salesiq.visitor.id(data.botToken);
-                     $zoho.salesiq.visitor.info({
-                    name: data.data?.name || "User",
-                    email: email
-                });
+                
+                   alert(data.message);
+                   const visitorId = `user_${userId}_${Date.now()}`;
+$zoho.salesiq.visitor.id(visitorId);
 
-                console.log("Visitor ID set:", $zoho.salesiq.visitor.id());
+                //      $zoho.salesiq.visitor.id(data.botToken);
+                //      $zoho.salesiq.visitor.info({
+                //     name: data.data?.name || "User",
+                //     email: email
+                // });
+
+                 console.log("Visitor ID set:", $zoho.salesiq.visitor.id());
                  }else{
                     alert('login failed');
                  }
