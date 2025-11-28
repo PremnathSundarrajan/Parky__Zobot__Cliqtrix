@@ -38,10 +38,10 @@
     //     // If you want to send this to backend for auth or tracking
     //     // fetch('/saveVisitor', { method: 'POST', body: JSON.stringify({ visitorId }) });
     // });
-    //   setTimeout(function(){
-    //     const v_email =  $zoho.salesiq.visitor.email();
-    // console.log(`email ${v_email}`)
-    // },1000);
+      setTimeout(function(){
+        const v_email =  $zoho.salesiq.visitor.email();
+    console.log(`email ${v_email}`)
+    },1000);
    
         // --- 1. SET THE UNIQUE ID (The Zobot Lookup Key) ---
         // This is the dedicated API for setting the UUID.
@@ -66,7 +66,7 @@
              visitor = $zoho.salesiq.visitor.info();
 
             console.log("-----------------------------------------");
-              console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.info()): ${visitor.email}`);
+            
             console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.id()): ${autoVisitorID}`);
             console.log("-----------------------------------------");
         }, 1000);
