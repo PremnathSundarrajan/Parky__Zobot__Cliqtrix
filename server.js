@@ -103,13 +103,13 @@ app.post('/login',async(req,res)=>{
 })
 
 app.get("/token",async(req,res)=>{
-  const {visitor_id}= req.query;
-  console.log(visitor_id);
-  if (!visitor_id) {
+  const body= req.body;
+  console.log(body.visitor_id);
+  if (!body.visitor_id) {
         return res.status(400).json({ message: 'Visitor ID is required' });
     }
 
-    const user = await prisma.user.findUnique({where:{zoho_visitor_id:visitor_id}});
+    const user = await prisma.user.findUnique({where:{zoho_visitor_id:body.visitor_id}});
     if (!user || !user.botToken) {
         return res.status(404).json({ message: 'Bot key not found or user not linked.' });
     }
