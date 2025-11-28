@@ -102,17 +102,17 @@ app.post('/login',async(req,res)=>{
 
 })
 
-app.post("/token",async(req,res)=>{
-  const body= req.body;
+app.get("/token",async(req,res)=>{
+  const {email}= req.query;
   console.log("/token API called");
-  console.log(body);
-  console.log(body.email);
-  if (!body.email) {
+
+  console.log(email);
+  if (!email) {
     console.log('email ID is required');
         return res.status(400).json({ message: 'email ID is required' });
     }
 
-    const user = await prisma.user.findUnique({where:{email:body.email}});
+    const user = await prisma.user.findUnique({where:{email:email}});
     if (!user || !user.botToken) {
         return res.status(404).json({ message: 'Bot key not found or user not linked.' });
     }
