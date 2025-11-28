@@ -16,7 +16,7 @@ const path = require('path');
 
 app.use(express.json());
 app.use(express.static('public'));
-app.use(sessionMiddleware); 
+// app.use(sessionMiddleware); 
 console.log(process.env.DATABASE_URL);
 app.get("/",(req,res)=>{
 
