@@ -62,9 +62,9 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post('/login',async(req,res)=>{
-  const {email, password, zoho_visitor_id} = req.body;
+  const {email, password} = req.body;
 
-    console.log(zoho_visitor_id);
+   
    console.log(email);
    //console.log(zoho_visitor_id);
     if (!email || !password) {
@@ -94,7 +94,7 @@ app.post('/login',async(req,res)=>{
      const updData = await prisma.user.update({where:{email:email},
         data:{
           botToken:botToken,
-          zoho_visitor_id:zoho_visitor_id
+         
         }
     })
     res.json({botToken:botToken,message:" login successful"});
@@ -106,13 +106,13 @@ app.post("/token",async(req,res)=>{
   const body= req.body;
   console.log("/token API called");
   console.log(body);
-  console.log(body.visitor_id);
-  if (!body.visitor_id) {
-    console.log('Visitor ID is required');
-        return res.status(400).json({ message: 'Visitor ID is required' });
+  console.log(body.email);
+  if (!body.email) {
+    console.log('email ID is required');
+        return res.status(400).json({ message: 'email ID is required' });
     }
 
-    const user = await prisma.user.findUnique({where:{zoho_visitor_id:body.visitor_id}});
+    const user = await prisma.user.findUnique({where:{email:body.email}});
     if (!user || !user.botToken) {
         return res.status(404).json({ message: 'Bot key not found or user not linked.' });
     }
