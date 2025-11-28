@@ -24,8 +24,8 @@
     $zoho.salesiq = $zoho.salesiq || {};
 
     // *** Hardcoded test data for verification ***
-    const TEST_USER_ID = "USER_TEST_123456"; 
-    const TEST_EMAIL = "test@example.com";
+    // const TEST_USER_ID = "USER_TEST_123456"; 
+    // const TEST_EMAIL = "test@example.com";
 
     $zoho.salesiq.ready = function() {
         console.log("Zoho SalesIQ is fully loaded and ready!");
@@ -38,40 +38,37 @@
     //     // If you want to send this to backend for auth or tracking
     //     // fetch('/saveVisitor', { method: 'POST', body: JSON.stringify({ visitorId }) });
     // });
-      setTimeout(function(){
-        const v_email =  $zoho.salesiq.visitor.email();
-    console.log(`email ${v_email}`)
-    },1000);
+     
    
         // --- 1. SET THE UNIQUE ID (The Zobot Lookup Key) ---
         // This is the dedicated API for setting the UUID.
         document.getElementById('but').addEventListener('click',async()=>{
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            $zoho.salesiq.visitor.id(TEST_USER_ID); 
-          $zoho.salesiq.visitor.info({
-            email: TEST_EMAIL,
-            name: "Test User",
-            // You can optionally add other details here
-        });
+        //     $zoho.salesiq.visitor.id(TEST_USER_ID); 
+        //   $zoho.salesiq.visitor.info({
+        //     email: TEST_EMAIL,
+        //     name: "Test User",
+        //     // You can optionally add other details here
+        // });
 
         // 3. CHECK RETRIEVAL after a delay
         // We still use a small delay just to ensure the widget has finished processing.
-       setTimeout(function() {
-            // A: Retrieve the ID that was manually SET (should be TEST_USER_ID)
+    //    setTimeout(function() {
+    //         // A: Retrieve the ID that was manually SET (should be TEST_USER_ID)
           
             
-            // B: Retrieve the standard SalesIQ-generated ID
-             autoVisitorID = $zoho.salesiq.visitor.id(); 
-             visitor = $zoho.salesiq.visitor.info();
+    //         // B: Retrieve the standard SalesIQ-generated ID
+    //         //  autoVisitorID = $zoho.salesiq.visitor.id(); 
+    //         //  visitor = $zoho.salesiq.visitor.info();
 
-            console.log("-----------------------------------------");
+    //         console.log("-----------------------------------------");
             
-            console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.id()): ${autoVisitorID}`);
-            console.log("-----------------------------------------");
-        });
+    //         console.log(`[VERIFICATION CHECK] Standard Visitor ID (visitor.id()): ${autoVisitorID}`);
+    //         console.log("-----------------------------------------");
+    //     });
         
-         setTimeout(async function() {
+         
             try{
                 const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/login',{
                     method:'POST',
@@ -82,13 +79,20 @@
                  const data = await response.json();
                  if (response.ok && data.botToken){
                     alert(data.message);
+                     $zoho.salesiq.visitor.id(data.botToken);
+                     $zoho.salesiq.visitor.info({
+                    name: data.data?.name || "User",
+                    email: email
+                });
+
+                console.log("Visitor ID set:", $zoho.salesiq.visitor.id());
                  }else{
                     alert('login failed');
                  }
             }catch(error) {
                console.error("Fetch error:", error);
                alert("Network or Server error during login.");
-         } });       })
+         }        })
        
         
         // --- 2. SET OTHER USER INFO (Name/Email) ---
