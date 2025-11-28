@@ -190,11 +190,11 @@ app.get('/guest',(req,res)=>{
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.use(isAuthenticated);
-app.post("/api/explore/area",async(req,res)=>{
-    const body = req.body;
+app.get("/api/explore/area",async(req,res)=>{
+    const {place} = req.query;
     console.log("/explore/area api called");
-    console.log(body);
-    res.status(200).send(` has 20 parking areas`);
+    console.log(place);
+    res.status(200).send(`${place} has 20 parking areas`);
 
 });
 
