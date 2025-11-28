@@ -15,8 +15,50 @@
     <div id="response"></div> 
 
 
- 
-<script>
+ <script>
+$zoho.salesiq = $zoho.salesiq || {};
+$zoho.salesiq.widget = $zoho.salesiq.widget || {};
+
+$zoho.salesiq.widget.on("load", function() {
+    console.log("Zoho SalesIQ is fully loaded and ready!");
+
+    $zoho.salesiq.visitor.onReady(function () {
+        const autoVisitorId = $zoho.salesiq.visitor.id();
+        console.log("Auto Visitor ID:", autoVisitorId);
+
+        document.getElementById('but').addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                        zoho_visitor_id: autoVisitorId   // send correct ID!
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.botToken) {
+                    console.log("BOT LOGIN SUCCESS:", data);
+                    alert("Login Successful!");
+                } else {
+                    alert("Login Failed!");
+                }
+            } catch (error) {
+                console.error("Login Network Error:", error);
+                alert("Server/Network error");
+            }
+        });
+    });
+});
+</script>
+
+<!-- <script>
     // Define initial variables (will be populated with actual login data)
     let autoVisitorID = "";
     let visitor={};
@@ -150,7 +192,7 @@
     //         }
     //     });
     // }
-</script>
+</script> -->
 //<script>
     // **1. Function to Get the Visitor ID from SalesIQ**
     // function getZohoVisitorId() {
