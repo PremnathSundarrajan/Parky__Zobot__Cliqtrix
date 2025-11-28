@@ -62,8 +62,8 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post('/login',async(req,res)=>{
-  const {email, password, zoho_visitor_id} = req.body;
-  console.log(zoho_visitor_id);
+  const {email, password} = req.body;
+
 
    console.log(email);
    //console.log(zoho_visitor_id);
@@ -94,7 +94,7 @@ app.post('/login',async(req,res)=>{
      const updData = await prisma.user.update({where:{email:email},
         data:{
           botToken:botToken,
-          zoho_visitor_id:zoho_visitor_id
+          zoho_visitor_id:botToken
         }
     })
     res.json({botToken:botToken,message:" login successful"});
