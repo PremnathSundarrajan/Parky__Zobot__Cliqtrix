@@ -123,13 +123,6 @@ app.get("/token",async(req,res)=>{
     });
 })
 
-app.post("/api/explore/area",async(req,res)=>{
-    // const body = req.body;
-    // console.log("/explore/area api called");
-    // console.log(body);
-    res.status(200).send(` has 20 parking areas`);
-
-});
 
 // app.post("/login", async (req, res) => {
 //   try {
@@ -197,6 +190,14 @@ app.get('/guest',(req,res)=>{
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.use(isAuthenticated);
+app.post("/api/explore/area",async(req,res)=>{
+    const body = req.body;
+    console.log("/explore/area api called");
+    console.log(body);
+    res.status(200).send(` has 20 parking areas`);
+
+});
+
 app.use("/api", bot_Router);
 
 app.listen(PORT, () => {
