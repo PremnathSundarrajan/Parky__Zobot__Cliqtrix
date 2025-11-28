@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-     <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
+     <!-- <script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script> -->
 </head> 
 <body>
 
@@ -14,8 +14,60 @@
     <div id="res"></div>
     <div id="response"></div> 
 
+    <!-- Zoho SalesIQ SDK MUST COME FIRST -->
+<!-- 1️⃣ Zoho SalesIQ Widget Script -->
+<script>
+window.$zoho = window.$zoho || {};
+$zoho.salesiq = $zoho.salesiq || {ready:function(){}};
+</script>
+<script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685" defer></script>
 
- <script>
+<!-- 2️⃣ Your Custom Code -->
+<script>
+$zoho.salesiq.ready = function () {
+    console.log("SalesIQ Widget Loaded & Ready!");
+
+    $zoho.salesiq.visitor.onReady(function () {
+        const autoVisitorID = $zoho.salesiq.visitor.id();
+        console.log("Auto Visitor ID:", autoVisitorID);
+    });
+
+    document.getElementById("but").addEventListener("click", async () => {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const visitorID = $zoho.salesiq.visitor.id();
+        console.log("Visitor ID Sending to Backend:", visitorID);
+
+        try {
+            const res = await fetch("https://parky-zobot-cliqtrix.onrender.com/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    zoho_visitor_id: visitorID
+                })
+            });
+
+            const data = await res.json();
+            console.log("Login Response:", data);
+
+            if (res.ok && data.botToken) {
+                alert("Login Success!");
+            } else {
+                alert("Login Failed!");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Server Error!");
+        }
+    });
+};
+</script>
+
+
+ <!-- <script>
 $zoho.salesiq = $zoho.salesiq || {};
 $zoho.salesiq.widget = $zoho.salesiq.widget || {};
 
@@ -252,7 +304,7 @@ $zoho.salesiq.widget.on("load", function() {
 //             alert('Login failed: ' + data.message);
 //         }
 //     })
-// </script>
+// </script> -->
 
     
 </body>
