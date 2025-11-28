@@ -194,7 +194,13 @@ app.get("/api/explore/area",async(req,res)=>{
     const {place} = req.query;
     console.log("/explore/area api called");
     console.log(place);
-    res.status(200).send(`${place} has 20 parking areas`);
+    const area = await prisma.parkingArea.findMany({
+           select: { city:place },
+    })
+     const cityList = area.map((u) => u.city);
+    const total_area = cityList.length;
+
+    res.status(200).send(`${place} has ${total_area} parking areas`);
 
 });
 
