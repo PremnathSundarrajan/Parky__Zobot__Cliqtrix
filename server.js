@@ -198,7 +198,7 @@ app.get("/api/explore/area",async(req,res)=>{
         where: {
     city: place
   },
-  select: { city: true }
+  select: { name: true }
     })
      const areaList = area.map((u) => u.name);
      const uniquearea = [...new Set(areaList)];
