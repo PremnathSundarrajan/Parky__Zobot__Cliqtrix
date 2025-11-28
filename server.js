@@ -26,6 +26,7 @@ app.post("/signup", async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
     console.log(name);
+
     const existing = await prisma.user.findUnique({
       where: { email }
     });
@@ -62,6 +63,7 @@ app.post("/signup", async (req, res) => {
 
 app.post('/login',async(req,res)=>{
   const {email, password, zoho_visitor_id} = req.body;
+  console.log(zoho_visitor_id);
 
    console.log(email);
    //console.log(zoho_visitor_id);
@@ -102,6 +104,7 @@ app.post('/login',async(req,res)=>{
 
 app.get("/token",async(req,res)=>{
   const {visitor_id}= req.query;
+  console.log(visitor_id);
   if (!visitor_id) {
         return res.status(400).json({ message: 'Visitor ID is required' });
     }
