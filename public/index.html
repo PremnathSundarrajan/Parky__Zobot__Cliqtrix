@@ -31,6 +31,11 @@ $zoho.salesiq.ready = function () {
         const autoVisitorID = $zoho.salesiq.visitor.id();
         console.log("Auto Visitor ID:", autoVisitorID);
     });
+    setTimeout(function(){
+        const v_email =  $zoho.salesiq.visitor.email();
+    console.log(`email ${v_email}`);
+    },1000)
+   
 
     document.getElementById("but").addEventListener("click", async () => {
         const email = document.getElementById("email").value;
