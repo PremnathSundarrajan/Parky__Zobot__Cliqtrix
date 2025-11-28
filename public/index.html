@@ -50,6 +50,7 @@
         document.getElementById('but').addEventListener('click',async()=>{
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            $zoho.salesiq.visitor.email(email);
         //     $zoho.salesiq.visitor.id(TEST_USER_ID); 
         //   $zoho.salesiq.visitor.info({
         //     email: TEST_EMAIL,
