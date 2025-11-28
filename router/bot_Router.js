@@ -9,7 +9,7 @@ const {
 
 bot_Router.post("/bot", bot_greet);
 
-bot_Router.get("/explore", bot_explore);
+bot_Router.post("/explore", bot_explore);
 
 // bot_Router.post("/explore/area", bot_explore_area);
 
