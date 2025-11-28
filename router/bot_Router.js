@@ -11,7 +11,7 @@ bot_Router.get("/bot", bot_greet);
 
 bot_Router.post("/explore", bot_explore);
 
-bot_Router.post("/explore/area", bot_explore_area);
+// bot_Router.post("/explore/area", bot_explore_area);
 
 bot_Router.post("/explore/area/book", bot_book);
 

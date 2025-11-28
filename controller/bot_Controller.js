@@ -23,15 +23,15 @@ const bot_explore =  (req, res) => {
   //parking area cities will be suggested here
 };
 
-const bot_explore_area = (req, res) => {
-    console.log("/explore/area api called");
-     const body = req.body;
-     console.log(body);
+// const bot_explore_area = (req, res) => {
+//     console.log("/explore/area api called");
+//      const body = req.body;
+//      console.log(body);
     
-  //city name varum, then we need to suggests parking areas of chennai here
-  res.status(200).send(`${body.place} has 20 parking areas`);
+//   //city name varum, then we need to suggests parking areas of chennai here
+//   res.status(200).send(`${body.place} has 20 parking areas`);
  
-};
+// };
 
 const bot_book =  (req, res) => {
   const body = req.body;
