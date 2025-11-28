@@ -12,10 +12,10 @@ function isAuthenticated(req, res, next) {
   const token = authHeader.split(" ")[1]; // Bearer <token>
   if (!token) return res.status(401).json({ message: "Invalid token format" });
 
-  jwt.verify(token, process.env.SESSION_SECRET, (err, req) => {
+  jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
     if (err) return res.status(403).json({ message: "Invalid or expired token" });
 
-    req.user = req; // attach user info to request
+    req.user = decoded; // attach user info to request
     next();
   });
 }
