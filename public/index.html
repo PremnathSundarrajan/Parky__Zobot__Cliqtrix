@@ -80,8 +80,7 @@
                  if (response.ok && data.botToken){
                 
                    alert(data.message);
-                   const visitorId = `user_${userId}_${Date.now()}`;
-$zoho.salesiq.visitor.id(visitorId);
+                  
 
                      $zoho.salesiq.visitor.id(data.botToken);
                      $zoho.salesiq.visitor.info({
