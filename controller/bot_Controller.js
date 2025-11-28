@@ -22,7 +22,7 @@ const bot_explore =  (req, res) => {
 const bot_explore_area = (req, res) => {
   try{
      const body = req.user.body;
-  console.log(body);
+  console.log(body[0]);
   //city name varum, then we need to suggests parking areas of chennai here
   res.status(200).send(`${body.place} has 20 parking areas`);
   }catch(err){
