@@ -2,11 +2,9 @@
 //     if (req.session && req.session.user) return next();
 //     return res.status(401).json({ message: "Unauthorized" });
 // }
-const express = require("express");
-const app = express();
-app.set("trust proxy", 1);
+
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+
 function isAuthenticated(req, res, next) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) return res.status(401).json({ message: "No token provided" });

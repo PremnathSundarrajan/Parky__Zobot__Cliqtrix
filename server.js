@@ -186,6 +186,8 @@ app.get('/guest',(req,res)=>{
 
   res.status(200).json({name:name});
 })
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 app.use(isAuthenticated);
 app.use("/api", bot_Router);
 
