@@ -102,7 +102,7 @@ app.post('/login',async(req,res)=>{
 
 })
 
-app.get("/token",async(req,res)=>{
+app.post("/token",async(req,res)=>{
   const body= req.body;
   console.log(body.visitor_id);
   if (!body.visitor_id) {
