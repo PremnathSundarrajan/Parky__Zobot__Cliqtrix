@@ -124,10 +124,10 @@ app.get("/token",async(req,res)=>{
 })
 
 app.post("/api/explore/area",async(req,res)=>{
-    const body = req.body;
-    console.log("/explore/area api called");
-    console.log(body);
-    res.status(200).send(`${body.place} has 20 parking areas`);
+    // const body = req.body;
+    // console.log("/explore/area api called");
+    // console.log(body);
+    res.status(200).send(` has 20 parking areas`);
 
 });
 
