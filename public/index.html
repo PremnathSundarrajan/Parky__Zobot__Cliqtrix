@@ -30,10 +30,13 @@
     $zoho.salesiq.ready = function() {
         console.log("Zoho SalesIQ is fully loaded and ready!");
           // Increased to 500ms for robust testing
-        setTimeout(function() {
-        const autoID = $zoho.salesiq.visitor.id();
-        console.log("Zoho Auto Visitor ID:", autoID);
-    }, 1000);
+          $zoho.salesiq.visitor.onReady(function() {
+        const visitorId = $zoho.salesiq.visitor.id();
+        console.log("Auto Visitor ID:", visitorId);
+
+        // If you want to send this to backend for auth or tracking
+        // fetch('/saveVisitor', { method: 'POST', body: JSON.stringify({ visitorId }) });
+    });
         // --- 1. SET THE UNIQUE ID (The Zobot Lookup Key) ---
         // This is the dedicated API for setting the UUID.
         document.getElementById('but').addEventListener('click',async()=>{
