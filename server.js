@@ -14,12 +14,12 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const path = require('path');
 
+app.use("/img", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.static('public'));
 // app.use(sessionMiddleware); 
 console.log(process.env.DATABASE_URL);
 app.get("/",(req,res)=>{
-
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
 app.post("/signup", async (req, res) => {
