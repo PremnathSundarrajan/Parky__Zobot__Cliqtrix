@@ -49,20 +49,14 @@ app.post("/signup", async (req, res) => {
         feedback: false
       }
     });
-     const botToken = jwt.sign({ id: user.id, email: user.email, name: user.name }, process.env.SESSION_SECRET, { expiresIn: "1h" });
-     const updData = await prisma.user.update({where:{email:email},
-        data:{
-          botToken:botToken,
-         
-        }
-    })
+  
 
-    console.log("Token generated in /signup");
+   
 
     return res.status(200).json({
       message: "User registered successfully",
       data: user,
-      botToken:botToken
+      
     });
 
   } catch (error) {

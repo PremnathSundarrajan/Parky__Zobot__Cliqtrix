@@ -386,10 +386,10 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    localStorage.removeItem("token");
+                    
 
                     showMessage(data.message + ' - Please login to get your token', 'success');
-                     localStorage.setItem("token",data.botToken);
+                     
                     e.target.reset();
                 } else {
                     showMessage(data.message, 'error');
