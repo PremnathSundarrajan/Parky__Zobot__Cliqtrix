@@ -51,14 +51,17 @@ const bot_book = async(req, res) => {
   const user = req.user;
   const user_det = await prisma.user.findUnique({where:{id:user.id}});
   const area_det = await prisma.parkingArea.findUnique({where:{name:area}});
-  const slot_det = await prisma.parkingSlot.findUnique({where:{parkingId:area.id, isAvailable:true}});
+  const slot_det = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id, isAvailable:true},select:{id:true}});
+  const id_slot = slot_det.map((u)=> u.id);
+  const id = id_slot[0];
+  const get_slot = await prisma.parkingSlot.findUnique({where:{id:id}});
   if(!slot_det){
     res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
   }
   else{
-    const book = await prisma.booking.create({data:{userId:user.id,slotId:slot_det.id,startTime:"2025-11-29 00:00:00", endTime:"2025-11-29 00:00:00", phone:user_det.phone, paymentStatus:"Pending",amount:0.0, createdAt:Date.now, updatedAt: Date.now}});
+    const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:"2025-11-29 00:00:00", endTime:"2025-11-29 00:00:00", phone:user_det.phone, paymentStatus:"Pending",amount:0.0, createdAt:Date.now, updatedAt: Date.now}});
     if(book){
-      res.status(200).json({reply:`Booked a slot number ${slot_det.slotNumber} in ${area} successfully`});
+      res.status(200).json({reply:`Booked a slot number ${get_slot.slotNumber} in ${area} successfully`});
     }else{
       res.status(500).json({reply:"Unable to book"});    
     }
