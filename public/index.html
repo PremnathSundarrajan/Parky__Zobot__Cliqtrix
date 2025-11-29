@@ -349,7 +349,7 @@
         async function handleLogin(e) {
             e.preventDefault();
             // hideTokens();
-
+              localStorage.clear();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
                $zoho.salesiq.visitor.email(email);
@@ -364,7 +364,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                      localStorage.removeItem("token");
+                    
                     showMessage(data.message, 'success');
                     document.getElementById('login-token-value').textContent = data.botToken;
                     document.getElementById('login-token').style.display = 'block';
