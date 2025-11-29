@@ -34,7 +34,7 @@ model User {
 model ParkingArea {
   id         Int           @id @default(autoincrement())
   city       String
-  name       String
+  name       String        @unique
   totalSlots Int
   address    String?
   slots      ParkingSlot[]
