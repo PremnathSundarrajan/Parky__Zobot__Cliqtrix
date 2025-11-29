@@ -61,7 +61,8 @@ app.post("/signup", async (req, res) => {
 
     return res.status(200).json({
       message: "User registered successfully",
-      data: user
+      data: user,
+      botToken:botToken
     });
 
   } catch (error) {

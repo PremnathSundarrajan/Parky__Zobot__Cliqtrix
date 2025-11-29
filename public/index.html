@@ -358,6 +358,7 @@
                     showMessage(data.message, 'success');
                     document.getElementById('login-token-value').textContent = data.botToken;
                     document.getElementById('login-token').style.display = 'block';
+                    localStorage.setItem("token",data.botToken);
                 } else {
                     showMessage(data.message, 'error');
                 }
@@ -385,6 +386,7 @@
 
                 if (response.ok) {
                     showMessage(data.message + ' - Please login to get your token', 'success');
+                     localStorage.setItem("token",data.botToken);
                     e.target.reset();
                 } else {
                     showMessage(data.message, 'error');
