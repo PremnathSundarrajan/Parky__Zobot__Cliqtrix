@@ -46,16 +46,25 @@ const bot_explore = async (req, res) => {
 
 // };
 
-const bot_book = (req, res) => {
-  // const body = req.body;
-  // console.log(body);
-  // if (body.area && body.area == "Tambaram") {
-  //   res.status(200).send("Booked Tambaram slot successfully");
-  // } else if (body.area && body.area == "Chrompet") {
-  //   res.status(200).send("Booked Chrompet slot Successfully");
-  // } else {
-  res.status(404).send("Please mention area");
-  // }
+const bot_book = async(req, res) => {
+  const {area} = req.query;
+  const user = req.user;
+  const user_det = await prisma.user.findUnique({where:{id:user.id}});
+  const area_det = await prisma.parkingArea.findUnique({where:{name:area}});
+  const slot_det = await prisma.parkingSlot.findUnique({where:{parkingId:area.id, isAvailable:true}});
+  if(!slot_det){
+    res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
+  }
+  else{
+    const book = await prisma.booking.create({data:{userId:user.id,slotId:slot_det.id,startTime:"2025-11-29 00:00:00", endTime:"2025-11-29 00:00:00", phone:user_det.phone, paymentStatus:"Pending",amount:0.0, createdAt:Date.now, updatedAt: Date.now}});
+    if(book){
+      res.status(200).json({reply:`Booked a slot number ${slot_det.slotNumber} in ${area} successfully`});
+    }else{
+      res.status(500).json({reply:"Unable to book"});    
+    }
+  }
+  
+  
 };
 
 module.exports = { bot_greet, bot_explore, bot_book };
