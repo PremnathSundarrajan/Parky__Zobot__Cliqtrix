@@ -219,10 +219,55 @@ app.get("/api/explore/area/slot",async(req,res)=>{
 })
 
 app.get("/api/history",async(req,res)=>{
-  const user = req.user;
-  const user_det = await prisma.user.findUnique({where:{email:user.email}});
-  const book_his = await prisma.booking.findMany({where:{userId:user_det.id}});
-  res.status(200).json({reply:book_his});
+   try {
+    const user = req.user; 
+
+    if (!user) {
+      return res.status(401).json({ reply: "Unauthorized user" });
+    }
+
+    const bookings = await prisma.booking.findMany({
+      where: { userId: user.id },
+      select: {
+        id: true,
+        startTime: true,
+        endTime: true,
+        paymentStatus: true,
+        amount: true,
+        slot: {
+          select: {
+            slotNumber: true,
+            parkingArea: {
+              select: {
+                name: true,
+                city: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: {
+        createdAt: "desc"
+      }
+    });
+
+    if (bookings.length === 0) {
+      return res.status(200).json({
+        reply: "You don't have any booking history yet."
+      });
+    }
+
+    return res.status(200).json({
+      reply: "Booking history fetched successfully",
+      history: bookings
+    });
+
+  } catch (err) {
+    console.error("Error fetching booking history:", err);
+    return res.status(500).json({
+      reply: "Failed to fetch booking history"
+    });
+  }
 })
 
 app.use("/api", bot_Router);
