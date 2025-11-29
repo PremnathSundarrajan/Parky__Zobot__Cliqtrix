@@ -13,7 +13,6 @@ const bot_Router = require("./router/bot_Router");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const path = require('path');
-const { use } = require("react");
 
 app.use(express.json());
 app.use(express.static('public'));
