@@ -1,11 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Parky The Bot - Authentication</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>
+    <script id="zsiqscript"
+        src="https://salesiq.zohopublic.in/widget?wc=siq432810251110ab8fa1526b5b918a80f6ca4a6de27ee9e3572852a9858c9dc685"
+        defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            margin: 0;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .container {
+            display: grid;
+            height: 100vh;
+            width: auto;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: 1fr auto 1fr;
+        }
+
+
+        .lgn-box {
+            position: relative;
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 40px;
+            overflow-y: auto;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.3),
+                rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+                rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+        }
+
+
+        .lgn-box::before {
+            content: "";
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("/img/502109547006201.gif") center/cover no-repeat;
+            opacity: 0.25;
+            z-index: -1;
+            border-radius: inherit;
+        }
+
+
+        .lgn-box h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 10px;
+            margin-top: 0;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ffed4e;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .tab.active {
+            color: #ffd700;
+            border-bottom: 3px solid #ffd700;
+            margin-bottom: -2px;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .tab:hover {
+            color: #ffed4e;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffd700;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            background: #2d2d2d;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 400;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: #1a3d1a;
+            color: #4ade80;
+            border: 1px solid #4ade80;
+        }
+
+        .message.error {
+            background: #3d1a1a;
+            color: #f87171;
+            border: 1px solid #f87171;
+        }
+
+        .token-display {
+            margin-top: 20px;
+            padding: 15px;
+            background: #2d2d2d;
+            border-radius: 5px;
+            word-break: break-all;
+            display: none;
+            border: 1px solid #ffd700;
+        }
+
+        .token-display strong {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .token-display code {
+            color: #ffed4e;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto 1fr;
+            }
+
+            .logo-section {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .car-animation {
+                max-width: 200px;
+            }
+
+            .lgn-box {
+                grid-column: 1;
+                grid-row: 2;
+                margin: 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="container">
+        <div class="lgn-box">
+            <h1>URBPARK </h1>
+            <p class="subtitle">Authentication Portal</p>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('login')">Login</button>
+                <button class="tab" onclick="switchTab('signup')">Sign Up</button>
+                <button class="tab" onclick="switchTab('token')">Get Token</button>
+            </div>
+
+            <div id="message" class="message"></div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="form-container active">
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <div id="login-token" class="token-display">
+                    <strong>Your Bot Token:</strong><br>
+                    
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signup-form" class="form-container">
+                <form onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signup-name">Name</label>
+                        <input type="text" id="signup-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone</label>
+                        <input type="tel" id="signup-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+
+            <!-- Token Fetch Form -->
+            <!-- <div id="token-form" class="form-container">
+                <form onsubmit="handleTokenFetch(event)">
+                    <div class="form-group">
+                        <label for="token-email">Email</label>
+                        <input type="email" id="token-email" required>
+                    </div>
+                    <button type="submit">Get Token</button>
+                </form>
+                <div id="fetch-token" class="token-display">
+                    <strong>Your Bot Token:</strong><br>
+                    <code id="fetch-token-value"></code>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.form-container').forEach(f => f.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(`${tab}-form`).classList.add('active');
+
+            hideMessage();
+            hideTokens();
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+        }
+
+        function hideMessage() {
+            document.getElementById('message').style.display = 'none';
+        }
+
+        function hideTokens() {
+            document.querySelectorAll('.token-display').forEach(t => t.style.display = 'none');
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            hideTokens();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage(data.message, 'success');
+                    document.getElementById('login-token-value').textContent = data.botToken;
+                    document.getElementById('login-token').style.display = 'block';
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('An error occurred during login', 'error');
+            }
+        }
+
+        async function handleSignup(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const phone = document.getElementById('signup-phone').value;
+            const password = document.getElementById('signup-password').value;
+
+            try {
+                const response = await fetch('https://parky-zobot-cliqtrix.onrender.com/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phone, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage(data.message + ' - Please login to get your token', 'success');
+                    e.target.reset();
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                showMessage('An error occurred during signup', 'error');
+            }
+        }
+
+        // async function handleTokenFetch(e) {
+        //     e.preventDefault();
+        //     document.getElementById('fetch-token').style.display = 'none';
+
+        //     const email = document.getElementById('token-email').value;
+
+        //     try {
+        //         const response = await fetch('/token', {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify({ email })
+        //         });
+
+        //         const data = await response.json();
+
+        //         if (response.ok) {
+        //             showMessage('Token retrieved successfully', 'success');
+        //             document.getElementById('fetch-token-value').textContent = data.token;
+        //             document.getElementById('fetch-token').style.display = 'block';
+        //         } else {
+        //             showMessage(data.message, 'error');
+        //         }
+        //     } catch (error) {
+        //         showMessage('An error occurred while fetching token', 'error');
+        //     }
+        // }
+    </script>
 </body>
+
 </html>
