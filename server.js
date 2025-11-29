@@ -106,7 +106,7 @@ app.post('/login',async(req,res)=>{
          
         }
     })
-      console.log("Token generated in /signup");
+      console.log("Token generated in /login");
     res.json({botToken:botToken,message:" login successful"});
 
 

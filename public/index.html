@@ -247,7 +247,7 @@
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('login')">Login</button>
                 <button class="tab" onclick="switchTab('signup')">Sign Up</button>
-                <button class="tab" onclick="switchTab('token')">Get Token</button>
+                <!-- <button class="tab" onclick="switchTab('token')">Get Token</button> -->
             </div>
 
             <div id="message" class="message"></div>
@@ -265,10 +265,10 @@
                     </div>
                     <button type="submit">Login</button>
                 </form>
-                <div id="login-token" class="token-display">
+                <!-- <div id="login-token" class="token-display">
                     <strong>Your Bot Token:</strong><br>
                     
-                </div>
+                </div> -->
             </div>
 
             <!-- Signup Form -->
@@ -340,7 +340,7 @@
 
         async function handleLogin(e) {
             e.preventDefault();
-            hideTokens();
+            // hideTokens();
 
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
