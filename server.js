@@ -13,6 +13,7 @@ const bot_Router = require("./router/bot_Router");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const path = require('path');
+const { use } = require("react");
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -200,8 +201,8 @@ app.get("/api/explore/area",async(req,res)=>{
   },
   select: { name: true }
     })
-     const areaList = area.map((u) => u.name);
-     const uniquearea = [...new Set(areaList)];
+    const areaList = area.map((u) => u.name);
+    const uniquearea = [...new Set(areaList)];
     const total_area = uniquearea.length;
 
     res.status(200).json({reply:`${place} has ${total_area} parking areas`,area:uniquearea});
@@ -215,6 +216,13 @@ app.get("/api/explore/area/slot",async(req,res)=>{
   const slotList = availability.map((u)=>u.slotNumber);
   const available = slotList.length;
   res.status(200).json({reply : `There are ${area_det.totalSlots} slots in ${area} and ${available} slots are available`});
+})
+
+app.get("/api/history",async(req,res)=>{
+  const user = req.user;
+  const user_det = await prisma.user.findUnique({where:{email:user.email}});
+  const book_his = await prisma.booking.findMany({where:{userId:user_det.id}});
+  res.status(200).json({reply:book_his});
 })
 
 app.use("/api", bot_Router);
