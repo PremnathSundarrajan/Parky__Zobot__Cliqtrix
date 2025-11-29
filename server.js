@@ -20,7 +20,7 @@ app.use(express.static('public'));
 // app.use(sessionMiddleware); 
 console.log(process.env.DATABASE_URL);
 app.get("/",(req,res)=>{
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
 })
 app.post("/signup", async (req, res) => {
   try {
