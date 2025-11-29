@@ -48,7 +48,7 @@ model ParkingSlot {
   parkingArea ParkingArea @relation(fields: [parkingId], references: [id])
   parkingId   Int
   slotNumber  String
-  isAvailable Boolean     @default(true)
+
   bookings    Booking[]
 }
 

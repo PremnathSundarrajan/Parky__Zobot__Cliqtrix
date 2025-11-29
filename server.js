@@ -211,10 +211,11 @@ app.get("/api/explore/area",async(req,res)=>{
 app.get("/api/explore/area/slot",async(req,res)=>{
   const {area} = req.query;
   const area_det = await prisma.parkingArea.findUnique({where:{name:area}});
-  const availability = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id, isAvailable:true}, select:{slotNumber:true}});
+  // const availability = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id, isAvailable:true}, select:{slotNumber:true}});
+   const availability = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id}, select:{slotNumber:true}});
   const slotList = availability.map((u)=>u.slotNumber);
   const available = slotList.length;
-  res.status(200).json({reply : `There are ${area_det.totalSlots} slots in ${area} and ${available} slots are available`});
+  res.status(200).json({reply : `There are ${area_det.totalSlots} slots in ${area}`});
 })
 
 app.get("/api/history",async(req,res)=>{
