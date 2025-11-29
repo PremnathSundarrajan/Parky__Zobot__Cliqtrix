@@ -55,11 +55,11 @@ const bot_book = async(req, res) => {
   const id_slot = slot_det.map((u)=> u.id);
   const id = id_slot[0];
   if(!id){
-  res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
+  res.status(200).json({reply:"Oops! No slots available right now 😕 \n Try booking for a different time to grab your spot!"});
     }
     const get_slot = await prisma.parkingSlot.findUnique({where:{id:id}});
     if(!slot_det){
-      res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
+        res.status(200).json({reply:"Oops! No slots available right now 😕 \n Try booking for a different time to grab your spot!"});
     }
     else{
       const isConflict = await prisma.booking.findFirst({
