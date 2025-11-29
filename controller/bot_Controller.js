@@ -60,6 +60,7 @@ const bot_book = async(req, res) => {
   }
   else{
     const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:new Date(), endTime:new Date(), phone:user_det.phone, paymentStatus:"Pending",amount:0.0}});
+    const update_available = await prisma.parkingSlot.update({where:{id:id},data:{isAvailable:false}});
     if(book){
       res.status(200).json({reply:`Booked a slot number ${get_slot.slotNumber} in ${area} successfully`});
     }else{
