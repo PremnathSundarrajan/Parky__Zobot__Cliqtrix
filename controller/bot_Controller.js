@@ -59,7 +59,7 @@ const bot_book = async(req, res) => {
     res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
   }
   else{
-    const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:"2025-11-29 00:00:00", endTime:"2025-11-29 00:00:00", phone:user_det.phone, paymentStatus:"Pending",amount:0.0, createdAt:Date.now, updatedAt: Date.now}});
+    const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:"2025-11-29 00:00:00", endTime:"2025-11-29 00:00:00", phone:user_det.phone, paymentStatus:"Pending",amount:0.0, createdAt:new Date(), updatedAt: new Date()}});
     if(book){
       res.status(200).json({reply:`Booked a slot number ${get_slot.slotNumber} in ${area} successfully`});
     }else{
