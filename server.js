@@ -218,8 +218,8 @@ app.get("/api/explore/area/slot",async(req,res)=>{
 })
 
 app.get("/api/history",async(req,res)=>{
-   try {
-    const user = req.user; 
+  try {
+    const user = req.user;
 
     if (!user) {
       return res.status(401).json({ reply: "Unauthorized user" });
@@ -245,9 +245,7 @@ app.get("/api/history",async(req,res)=>{
           }
         }
       },
-      orderBy: {
-        createdAt: "desc"
-      }
+      orderBy: { createdAt: "desc" }
     });
 
     if (bookings.length === 0) {
@@ -256,9 +254,24 @@ app.get("/api/history",async(req,res)=>{
       });
     }
 
+    // Format nicely for chatbot output
+    const historyMessage = bookings.map((b, index) => {
+      const start = new Date(b.startTime).toLocaleString();
+      const end = new Date(b.endTime).toLocaleString();
+      const status = b.paymentStatus ? "Paid" : "Pending";
+
+      return `
+${index + 1}) 📍 *${b.slot.parkingArea.name}* - ${b.slot.parkingArea.city}
+🅿 Slot: ${b.slot.slotNumber}
+🕒 From: ${start}
+🕔 To: ${end}
+💰 Amount: ₹${b.amount}
+💳 Status: ${status}
+───────────────────────`;
+    }).join("");
+
     return res.status(200).json({
-      reply: "Booking history fetched successfully",
-      history: bookings
+      reply: `Here is your booking history:\n${historyMessage}`
     });
 
   } catch (err) {
