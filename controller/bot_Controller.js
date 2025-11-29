@@ -65,7 +65,7 @@ const bot_book = async(req, res) => {
     else{
       const isConflict = await prisma.booking.findFirst({
     where: {
-      slotId: requestedSlotId,
+      slotId: id,
       AND: [
         { startTime: { lt: newEndTime } },
         { endTime: { gt: newStartTime } }
