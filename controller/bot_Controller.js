@@ -54,6 +54,9 @@ const bot_book = async(req, res) => {
   const slot_det = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id, isAvailable:true},select:{id:true}});
   const id_slot = slot_det.map((u)=> u.id);
   const id = id_slot[0];
+  if(!id){
+res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
+  }
   const get_slot = await prisma.parkingSlot.findUnique({where:{id:id}});
   if(!slot_det){
     res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
