@@ -385,6 +385,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
+                    localStorage.clear(); 
                     showMessage(data.message + ' - Please login to get your token', 'success');
                      localStorage.setItem("token",data.botToken);
                     e.target.reset();
