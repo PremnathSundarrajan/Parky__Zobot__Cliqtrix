@@ -55,13 +55,28 @@ const bot_book = async(req, res) => {
   const id_slot = slot_det.map((u)=> u.id);
   const id = id_slot[0];
   if(!id){
-res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
+  res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
+    }
+    const get_slot = await prisma.parkingSlot.findUnique({where:{id:id}});
+    if(!slot_det){
+      res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
+    }
+    else{
+      const isConflict = await prisma.booking.findFirst({
+    where: {
+      slotId: requestedSlotId,
+      AND: [
+        { startTime: { lt: newEndTime } },
+        { endTime: { gt: newStartTime } }
+      ]
+    }
+  });
+
+  if (isConflict) {
+    return res.status(400).json({
+      reply: "This slot is already booked for the selected time."
+    });
   }
-  const get_slot = await prisma.parkingSlot.findUnique({where:{id:id}});
-  if(!slot_det){
-    res.status(200).json({reply:"All slots are currently full 😕 Please check again in a few minutes — a spot may open soon!"});
-  }
-  else{
     const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:new Date(), endTime:new Date(), phone:user_det.phone, paymentStatus:"Pending",amount:0.0}});
     const update_available = await prisma.parkingSlot.update({where:{id:id},data:{isAvailable:false}});
     if(book){
