@@ -67,8 +67,8 @@ const bot_book = async(req, res) => {
     where: {
       slotId: id,
       AND: [
-        { startTime: { lt: newEndTime } },
-        { endTime: { gt: newStartTime } }
+        { startTime: { lt:  new Date()} },
+        { endTime: { gt: new Date() } }
       ]
     }
   });
