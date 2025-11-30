@@ -30,21 +30,13 @@ const bot_explore = async (req, res) => {
   console.log(uniquecity);
   res.status(200).json({
     reply:
-      "Great choice! 🌆 Here are the available parking locations you can explore. Each place includes details like total slots, nearby landmarks, and availability to help you choose the perfect spot. Just select a location to see more information or book a slot instantly!",
+     "Great choice! 🚗✨ We have parking areas available in the following cities. Select a city to explore nearby parking locations and check real-time slot availability!",
     city: uniquecity,
   });
   //parking area cities will be suggested here
 };
 
-// const bot_explore_area = (req, res) => {
-//     console.log("/explore/area api called");
-//      const body = req.body;
-//      console.log(body);
 
-//   //city name varum, then we need to suggests parking areas of chennai here
-//   res.status(200).send(`${body.place} has 20 parking areas`);
-
-// };
 
 const bot_book = async(req, res) => {
   const {area,time} = req.query;
@@ -97,7 +89,9 @@ if (!availableSlot) {
             feedback:false
           }
         });
-      res.status(200).json({reply:`Booked a slot number ${availableSlot.slotNumber} in ${area} successfully`});
+      res.status(200).json({reply:`Great! Your booking is confirmed.\n
+Slot: ${availableSlot.slotNumber}\n
+Location: ${area}`});
     }else{
       res.status(500).json({reply:"Unable to book"});    
     }
