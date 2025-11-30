@@ -322,7 +322,7 @@ app.get("/api/feedback",async(req,res)=>{
         });
 
         if (feed.feedback) {
-            return res.status(200).json({ reply: "Feedback already given." });
+            return res.status(200).json({ reply: false });
         }
 
         // If feedback is false, get the latest booking
@@ -346,7 +346,7 @@ app.get("/api/feedback",async(req,res)=>{
         });
 
         if (!latestBooking) {
-            return res.status(200).json({ reply: "No bookings found to provide feedback for." });
+            return res.status(200).json({ reply:false });
         }
 
         // Format a message for user feedback
