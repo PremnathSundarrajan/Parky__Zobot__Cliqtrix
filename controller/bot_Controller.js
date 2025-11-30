@@ -48,6 +48,10 @@ const bot_explore = async (req, res) => {
 
 const bot_book = async(req, res) => {
   const {area,time} = req.query;
+  if (!time) {
+  return res.status(400).json({ reply: "Please provide start time in the request." });
+}
+
   const startTime =  new Date(time.replace(" ","T"));
   const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); 
   const user = req.user;
