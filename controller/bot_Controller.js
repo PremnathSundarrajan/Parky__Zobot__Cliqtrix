@@ -59,42 +59,45 @@ const bot_book = async(req, res) => {
   const user_det = await prisma.user.findUnique({where:{id:user.id}});
   const area_det = await prisma.parkingArea.findUnique({where:{name:area}});
   // const slot_det = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id, isAvailable:true},select:{id:true}});
-    const slot_det = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id},select:{id:true}});
-  const id_slot = slot_det.map((u)=> u.id);
-  const id = id_slot[0];
-  if(!id){
-  res.status(200).json({reply:"Oops! No slots available right now 😕 \n Try booking for a different time to grab your spot!"});
-    }
-    const get_slot = await prisma.parkingSlot.findUnique({where:{id:id}});
-    if(!slot_det){
-        res.status(200).json({reply:"Oops! No slots available right now 😕 \n Try booking for a different time to grab your spot!"});
-    }
-    else{
-      const isConflict = await prisma.booking.findFirst({
+    const slot_det = await prisma.parkingSlot.findMany({where:{parkingId:area_det.id},select:{id:true, slotNumber:true}});
+    let availableSlot = null;
+
+for (const slot of slot_det) {
+  const conflict = await prisma.booking.findFirst({
     where: {
-      slotId: id,
+      slotId: slot.id,
       AND: [
-        { startTime: { lt:  endTime} },
+        { startTime: { lt: endTime } },
         { endTime: { gt: startTime } }
       ]
     }
   });
 
-  if (isConflict) {
-    return res.status(400).json({
-      reply: "This slot is already booked for the selected time."
-    });
+  if (!conflict) {
+    availableSlot = slot;
+    break; // pick the first free slot
   }
-    const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:startTime, endTime:endTime, phone:user_det.phone, paymentStatus:"Pending",amount:0.0}});
+}
+if (!availableSlot) {
+  return res.status(200).json({
+    reply: "Oops! No slots available at the requested time 😕"
+  });
+}
+
+
+
+
+
+    const book = await prisma.booking.create({data:{userId:user.id,slotId:availableSlot.id,startTime:startTime, endTime:endTime, phone:user_det.phone, paymentStatus:"Pending",amount:0.0}});
     // const update_available = await prisma.parkingSlot.update({where:{id:id},data:{isAvailable:false}});
     if(book){
-      res.status(200).json({reply:`Booked a slot number ${get_slot.slotNumber} in ${area} successfully`});
+      res.status(200).json({reply:`Booked a slot number ${availableSlot.slotNumber} in ${area} successfully`});
     }else{
       res.status(500).json({reply:"Unable to book"});    
     }
   }
   
   
-};
+;
 
 module.exports = { bot_greet, bot_explore, bot_book };
