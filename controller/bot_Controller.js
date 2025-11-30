@@ -47,7 +47,9 @@ const bot_explore = async (req, res) => {
 // };
 
 const bot_book = async(req, res) => {
-  const {area} = req.query;
+  const {area,time} = req.query;
+  const startTime =  new Date(time.replace(" ","T"));
+  const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); 
   const user = req.user;
   const user_det = await prisma.user.findUnique({where:{id:user.id}});
   const area_det = await prisma.parkingArea.findUnique({where:{name:area}});
@@ -67,8 +69,8 @@ const bot_book = async(req, res) => {
     where: {
       slotId: id,
       AND: [
-        { startTime: { lt:  new Date()} },
-        { endTime: { gt: new Date() } }
+        { startTime: { lt:  endTime} },
+        { endTime: { gt: startTime } }
       ]
     }
   });
@@ -78,7 +80,7 @@ const bot_book = async(req, res) => {
       reply: "This slot is already booked for the selected time."
     });
   }
-    const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:new Date(), endTime:new Date(), phone:user_det.phone, paymentStatus:"Pending",amount:0.0}});
+    const book = await prisma.booking.create({data:{userId:user.id,slotId:id,startTime:startTime, endTime:endTime, phone:user_det.phone, paymentStatus:"Pending",amount:0.0}});
     // const update_available = await prisma.parkingSlot.update({where:{id:id},data:{isAvailable:false}});
     if(book){
       res.status(200).json({reply:`Booked a slot number ${get_slot.slotNumber} in ${area} successfully`});
