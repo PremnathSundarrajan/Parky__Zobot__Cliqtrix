@@ -114,7 +114,11 @@ app.post('/login',async(req,res)=>{
     maxAge: 3600 * 1000 // 1 hour
 });
 
-return res.json({ message: "Login successful" });
+return res.json({
+  message: "Login successful",
+  botToken: botToken
+});
+
 
 
 })
