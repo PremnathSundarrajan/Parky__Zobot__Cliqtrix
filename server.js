@@ -248,7 +248,7 @@ app.get("/api/history",async(req,res)=>{
     const user = req.user;
 
     if (!user) {
-      return res.status(401).json({ reply: "Unauthorized user" });
+      return res.status(401).json({ reply: false });
     }
 
     const bookings = await prisma.booking.findMany({
