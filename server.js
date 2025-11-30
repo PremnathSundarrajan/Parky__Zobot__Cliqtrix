@@ -308,6 +308,68 @@ ${index + 1}) 📍 *${b.slot.parkingArea.name}* - ${b.slot.parkingArea.city}
   }
 })
 
+app.get("/api/feedback",async(req,res)=>{
+    try {
+        const user = req.user;
+
+        if (!user) {
+            return res.status(401).json({ reply: "Not authenticated" });
+        }
+
+        // Fetch user to check feedback column
+        const feed = await prisma.user.findUnique({
+            where: { id: user.id }
+        });
+
+        if (feed.feedback) {
+            return res.status(200).json({ reply: "Feedback already given." });
+        }
+
+        // If feedback is false, get the latest booking
+        const latestBooking = await prisma.booking.findFirst({
+            where: { userId: user.id },
+            orderBy: { createdAt: "desc" },
+            select: {
+                id: true,
+                startTime: true,
+                endTime: true,
+                amount: true,
+                slot: {
+                    select: {
+                        slotNumber: true,
+                        parkingArea: {
+                            select: { name: true, city: true }
+                        }
+                    }
+                }
+            }
+        });
+
+        if (!latestBooking) {
+            return res.status(200).json({ reply: "No bookings found to provide feedback for." });
+        }
+
+        // Format a message for user feedback
+        const start = new Date(latestBooking.startTime).toLocaleString();
+        const end = new Date(latestBooking.endTime).toLocaleString();
+
+        const message = `Hi ${user.name}, we noticed you haven't given feedback yet! 🙏
+Your latest booking:
+📍 ${latestBooking.slot.parkingArea.name} - ${latestBooking.slot.parkingArea.city}
+🅿 Slot: ${latestBooking.slot.slotNumber}
+🕒 From: ${start} To: ${end}
+💰 Amount: ₹${latestBooking.amount}
+
+Please provide your feedback.`;
+
+        return res.status(200).json({ reply: message });
+
+    } catch (err) {
+        console.error("Error fetching feedback info:", err);
+        return res.status(500).json({ reply: "Failed to fetch feedback information." });
+    }
+});
+
 app.use("/api", bot_Router);
 
 app.listen(PORT, () => {
