@@ -4,6 +4,8 @@ const app = express();
 app.set("trust proxy", 1);
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 
 
 const { isAuthenticated } = require("./middleware/auth");
@@ -105,7 +107,14 @@ app.post('/login',async(req,res)=>{
         }
     })
       console.log("Token generated in /login");
-    res.json({botToken:botToken,message:" login successful"});
+ res.cookie("botToken", botToken, {
+    httpOnly: true,
+    secure: true, 
+    sameSite: "Lax",
+    maxAge: 3600 * 1000 // 1 hour
+});
+
+return res.json({ message: "Login successful" });
 
 
 })
