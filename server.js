@@ -256,7 +256,7 @@ app.get("/api/feedback",async(req,res)=>{
         const user = req.user;
 
         if (!user) {
-            return res.status(401).json({ reply: "Not authenticated" });
+            return res.status(401).json({ reply:false });
         }
 
         // Fetch user to check feedback column
