@@ -48,6 +48,7 @@ const bot_explore = async (req, res) => {
 
 const bot_book = async(req, res) => {
   const {area,time} = req.query;
+  console.log(time);
   if (!time) {
   return res.status(400).json({ reply: "Please provide start time in the request." });
 }
