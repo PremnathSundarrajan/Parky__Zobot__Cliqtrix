@@ -6,7 +6,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
-
+const cors = require('cors')
+app.use(cors({
+    origin: "https://parky-zobot-cliqtrix.onrender.com",
+    credentials: true
+}));
 
 const { isAuthenticated } = require("./middleware/auth");
 const sessionMiddleware = require("./config/sessionStore");
