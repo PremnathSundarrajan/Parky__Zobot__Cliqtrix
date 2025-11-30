@@ -91,6 +91,12 @@ if (!availableSlot) {
     const book = await prisma.booking.create({data:{userId:user.id,slotId:availableSlot.id,startTime:startTime, endTime:endTime, phone:user_det.phone, paymentStatus:"Pending",amount:0.0}});
     // const update_available = await prisma.parkingSlot.update({where:{id:id},data:{isAvailable:false}});
     if(book){
+
+      const change = await prisma.user.update({where:{id:user.id},
+          data:{
+            feedback:false
+          }
+        });
       res.status(200).json({reply:`Booked a slot number ${availableSlot.slotNumber} in ${area} successfully`});
     }else{
       res.status(500).json({reply:"Unable to book"});    

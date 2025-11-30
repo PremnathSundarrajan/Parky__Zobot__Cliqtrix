@@ -352,6 +352,11 @@ app.get("/api/feedback",async(req,res)=>{
         // Format a message for user feedback
         const start = new Date(latestBooking.startTime).toLocaleString();
         const end = new Date(latestBooking.endTime).toLocaleString();
+        const change = await prisma.user.update({where:{id:feed.id},
+          data:{
+            feedback:true
+          }
+        });
 
         const message = `Hi ${user.name}, we noticed you haven't given feedback yet! 🙏
 Your latest booking:

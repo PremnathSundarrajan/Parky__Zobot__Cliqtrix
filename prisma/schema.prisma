@@ -14,7 +14,7 @@ model User {
   email     String    @unique
   phone     String    @unique
   password  String? // optional for guest users
-  feedback  Boolean   @default(false)
+  feedback  Boolean   @default(true)
   isGuest   Boolean   @default(false)
   bookings  Booking[]
   botToken  String?
