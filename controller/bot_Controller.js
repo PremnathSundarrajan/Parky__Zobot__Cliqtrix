@@ -89,10 +89,10 @@ if (!availableSlot) {
             feedback:false
           }
         });
-      res.status(200).json({reply:`Great! Your booking is confirmed.
-Slot: ${availableSlot.slotNumber}
-Location: ${area}
-⏱ Validity: This booking is valid for 1 hour from the time of booking. Once the time is completed, please book again if you need more time.`});
+      res.status(200).json({reply:`Great! Your booking is confirmed.\n
+Slot: ${availableSlot.slotNumber}\n
+Location: ${area}\n
+⏱ Validity: Your slot will be reserved for 1 hour from your selected arrival time. Once that time is completed, please book again if you need more time.`});
     }else{
       res.status(500).json({reply:"Unable to book"});    
     }
