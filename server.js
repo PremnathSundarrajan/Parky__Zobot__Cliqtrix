@@ -256,7 +256,7 @@ app.get("/api/feedback",async(req,res)=>{
         const user = req.user;
 
         if (!user) {
-            return res.status(401).json({ reply:false });
+            return res.status(401).json({ reply:false ,bool:false});
         }
 
         // Fetch user to check feedback column
@@ -265,7 +265,7 @@ app.get("/api/feedback",async(req,res)=>{
         });
 
         if (feed.feedback) {
-            return res.status(200).json({ reply: false });
+            return res.status(200).json({ reply: false ,bool:false});
         }
 
         // If feedback is false, get the latest booking
@@ -310,11 +310,11 @@ Your latest booking:
 
 Please provide your feedback.`;
 
-        return res.status(200).json({ reply: message });
+        return res.status(200).json({ reply: message ,bool:true});
 
     } catch (err) {
         console.error("Error fetching feedback info:", err);
-        return res.status(500).json({ reply: "Failed to fetch feedback information." });
+        return res.status(500).json({ reply: "Failed to fetch feedback information.",bool:false });
     }
 });
 
