@@ -271,7 +271,7 @@ if(msg.contains("bengaluru"))
 else if(msg.contains("thank") || msg.contains("bye"))
 {
 	option.put("action","end");
-	option.put("replies",{"Bye"});
+	option.put("replies",{"You're welcome! 😊 Happy to help."});
 }
 else
 {
